@@ -85,6 +85,8 @@ body {
 
 
     </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lobibox@1.2.7/dist/css/lobibox.min.css">
+
 </head>
 <body>
     <div class="form-container">
@@ -127,6 +129,8 @@ body {
     </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/lobibox@1.2.7/dist/js/lobibox.min.js"></script>
 <script>
     $(document).ready(function(){
        $('.savebtn').click(function(){
@@ -141,6 +145,22 @@ body {
            cache:false,
            contentType:false
           }).done(function(response){
+            responses = JSON.parse(response);
+            Lobibox.notify('success', {
+                    size: 'mini',
+                    rounded: true,
+                    delayIndicator: false,
+                    msg: responses['message'],
+                });
+
+          }).fail(function(error){
+            errors = JSON.parse(error['responseText']);
+                Lobibox.notify('warning', {
+                    size: 'mini',
+                    rounded: true,
+                    delayIndicator: false,
+                    msg: errors['message'],
+                });
 
           })
 
