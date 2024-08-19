@@ -5,6 +5,12 @@ $username="root";
 $password="";
 $dbname="phpcrud";
 
+$connection= new mysqli($host,$username,$password,$dbname);
+
+if(!$connection){
+  echo "Connection Not Established";
+}
+
 
 $name=$_POST['name'];
 
@@ -38,29 +44,17 @@ if($_POST['gender'] =='' ){
     exit();
 }
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$query="Insert into students(name,email,phone,dob,gender) values ('$name','$email',
+'$phone','$dob','$gender')";
 
-    $stmt = $pdo->prepare("INSERT INTO students (name, email,phone,dob,gender) VALUES (:name, :email,:phone,:dob,:gender)");
-
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':phone', $phone);
-    $stmt->bindParam(':dob', $dob);
-    $stmt->bindParam(':gender', $gender);
-    $stmt->execute();
-
-    http_response_code(200);
-    echo json_encode(array("message" => "Data Saved Successfully."));
+if(mysqli_query($connection,$query)){
+   http_response_code(200);
+   echo json_encode(array("message" => "Data Saved Successfully."));
+   exit();
+}else{
+    http_response_code(300);
+    echo json_encode(array("message" => "Something Went Wrong."));
     exit();
-
-} catch (PDOException $e) {
-
-    echo "Error: " . $e->getMessage();
-
 }
-
-$pdo = null;
 
 ?>
