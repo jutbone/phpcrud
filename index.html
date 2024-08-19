@@ -153,8 +153,6 @@ body {
                     msg: responses['message'],
                 });
 
-                $('#studentForm')[0].reset();
-
           }).fail(function(error){
             errors = JSON.parse(error['responseText']);
                 Lobibox.notify('warning', {
