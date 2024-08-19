@@ -89,7 +89,7 @@ body {
 <body>
     <div class="form-container">
         <h2>New Student Registration</h2>
-        <form  method="post">
+        <form  id="studentForm" method="post">
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter full name" required>
@@ -121,9 +121,31 @@ body {
             </div>
 
             <div class="form-group">
-                <button type="submit">Submit</button>
+                <button type="button" class="savebtn">Submit</button>
             </div>
         </form>
     </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+       $('.savebtn').click(function(){
+          let form=document.getElementById('studentForm');
+          let data= new FormData(form);
+
+          $.ajax({
+           url:"save.php",
+           data:data,
+           type:"post",
+           processData:false,
+           cache:false,
+           contentType:false
+          }).done(function(response){
+
+          })
+
+       })
+    })
+</script>
 </body>
 </html>
